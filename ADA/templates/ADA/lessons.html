@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADA Lessons</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+
+    <header class="w-full bg-indigo-600 text-white p-6 shadow-md mb-8">
+        <h1 class="text-3xl font-bold text-center">Lessons</h1>
+        <p class="text-center mt-2">Choose a subject to start learning</p>
+    </header>
+
+    <!-- Elo Display -->
+    <div class="mb-6">
+        <div class="bg-white shadow-md rounded-xl px-6 py-4 text-xl font-semibold text-indigo-700 text-center">
+            Current Elo: <span id="elo-display">500</span>
+        </div>
+    </div>
+
+    <!-- Lesson Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-11/12 max-w-6xl">
+        <div onclick="location.href='/lessons/trig/'"
+             class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-8 px-6 rounded-xl shadow-md cursor-pointer transition transform hover:scale-105 text-center">
+            Trig
+        </div>
+        <div onclick="alert('Calc 1 coming soon!')"
+             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-8 px-6 rounded-xl shadow-md cursor-pointer transition transform hover:scale-105 text-center">
+            Calc 1
+        </div>
+        <div onclick="alert('Calc 2 coming soon!')"
+             class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-8 px-6 rounded-xl shadow-md cursor-pointer transition transform hover:scale-105 text-center">
+            Calc 2
+        </div>
+        <div onclick="alert('Algebra 2 coming soon!')"
+             class="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-8 px-6 rounded-xl shadow-md cursor-pointer transition transform hover:scale-105 text-center">
+            Algebra 2
+        </div>
+    </div>
+
+    <br>
+    <a href="/" class="mt-8 text-indigo-600 hover:underline">Back to Dashboard</a>
+
+    <script>
+        if (!localStorage.getItem('elo')) {
+            localStorage.setItem('elo', 500);
+        }
+        const eloDisplay = document.getElementById('elo-display');
+        eloDisplay.innerText = localStorage.getItem('elo');
+    </script>
+
+</body>
+</html>

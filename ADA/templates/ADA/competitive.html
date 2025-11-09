@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Competitive Mode</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen flex flex-col items-center p-6">
+
+  <div class="max-w-3xl w-full bg-white shadow-2xl rounded-3xl p-8 text-center">
+    <h1 class="text-4xl font-bold text-indigo-700 mb-4">Competitive Mode</h1>
+    <p class="text-gray-700 mb-6">Answer the question before the opponent!</p>
+
+    <div id="question-box" class="mb-6 text-xl font-semibold text-gray-800">
+      <!-- Question will appear here -->
+    </div>
+
+    <input id="answer-input" type="text" placeholder="Type your answer" class="px-4 py-2 border rounded-lg text-center text-lg w-1/2">
+    <button id="submit-btn" class="ml-4 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl transition">Submit</button>
+
+    <div class="mt-4">
+      <span>Time left: </span><span id="timer" class="font-bold text-red-600">30</span> seconds
+    </div>
+
+    <div id="result" class="mt-6 text-2xl font-bold text-green-600"></div>
+  </div>
+
+  <script>
+    const questions = [
+      { q: "sin(30°)", a: "0.5", elo: 500 },
+      { q: "cos(60°)", a: "0.5", elo: 600 },
+      { q: "tan(45°)", a: "1", elo: 700 },
+      { q: "sin(90°)", a: "1", elo: 800 },
+      { q: "cos(0°)", a: "1", elo: 900 },
+      { q: "tan(0°)", a: "0", elo: 1000 },
+      { q: "sin(0°)", a: "0", elo: 1100 },
+    ];
+
+    let currentQ = 0;
+    let timeLeft = 30;
+    let timerInterval;
+    let opponentTime = Math.floor(Math.random() * 30) + 5;
+
+    const questionBox = document.getElementById("question-box");
+    const answerInput = document.getElementById("answer-input");
+    const submitBtn = document.getElementById("submit-btn");
+    const timerEl = document.getElementById("timer");
+    const resultEl = document.getElementById("result");
+
+    function showQuestion() {
+      const q = questions[currentQ];
+      questionBox.innerText = q.q;
+      answerInput.value = "";
+      timeLeft = 30;
+      timerEl.innerText = timeLeft;
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerEl.innerText = timeLeft;
+
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          resultEl.innerText = "Time's up! You lost this question.";
+          submitBtn.disabled = true;
+        }
+
+        if (30 - timeLeft >= opponentTime) {
+          clearInterval(timerInterval);
+          resultEl.innerText = "Opponent solved it first! You lost this question.";
+          submitBtn.disabled = true;
+        }
+      }, 1000);
+    }
+
+    submitBtn.addEventListener("click", () => {
+      clearInterval(timerInterval);
+      const userAnswer = answerInput.value.trim();
+      const correctAnswer = questions[currentQ].a;
+      if (userAnswer === correctAnswer && timeLeft > 0 && 30 - timeLeft < opponentTime) {
+        resultEl.innerText = "Correct! You won this question.";
+      } else {
+        resultEl.innerText = "Incorrect or too late! You lost this question.";
+      }
+      submitBtn.disabled = true;
+    });
+
+    showQuestion();
+  </script>
+</body>
+</html>
