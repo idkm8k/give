@@ -19,14 +19,21 @@ ADA started as a hackathon idea with two teammates, @alexsalonics and @dand815. 
 ## How to run
 
 ```bash
-pip install django
+pip install django channels channels-redis
 python manage.py migrate
 python manage.py runserver
 ```
 
+## Project layout
+
+- `ADA/` – the main app: `views.py` (game logic), `models.py` (data), `consumers.py` and `routing.py` (real-time features), and `templates/ADA/` (pages like `trig.html` and `competitive.html`)
+- `eduapp/` – Django project settings and configuration
+- `manage.py` – Django's command-line launcher
+
 ## Built with
 
 - Python
-- CSS
+- HTML
 - Django
-   SQLite
+- SQLite
+- CSS   
